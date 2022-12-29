@@ -21,7 +21,7 @@ export async function PreventDDOSMiddleware(
     .exec({
       tag: "preventDDOS",
       ip,
-      limitCounter: 18,
+      limitCounter: 25,
       timeout,
       expiresIn,
     })
