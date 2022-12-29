@@ -7,10 +7,12 @@
   "main": "./src/server",
   "repository": "https://github.com/Or1x/blog-server.git",
   "scripts": {
+    "dev": "dotenv -e .env.dev -- ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify --exit-child src/server.ts",
     "build": "yarn clean && babel ./src --extensions \".ts\" --out-dir ./dist/src --copy-files --no-copy-ignored",
     "clean": "rm -rf ./dist && mkdir ./dist",
-    "start": "dotenv -e .env.production node ./dist/src/server.js",
-    "test": "dotenv -e .env.test -- jest"
+    "start": "dotenv -e .env.production -- node ./dist/src/server.js",
+    "test": "dotenv -e .env.test -- jest",
+    "migrate:mysql": "dotenv -e .env.dev -- prisma migrate dev"
   },
   "prisma": {
     "schema": "./src/db/sql/prisma/schema.prisma"

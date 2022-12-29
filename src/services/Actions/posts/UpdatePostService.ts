@@ -49,20 +49,20 @@ export class UpdatePostService {
       );
 
     // Update name on directory
-    if (post.name.value !== name) {
-      const formatedOldName = post.name.value.replaceAll(" ", "_");
-      const oldUrl = path.join(
-        __dirname,
-        "..",
-        "..",
-        "..",
-        "..",
-        "public",
-        "uploads",
-        "posts",
-        formatedOldName
-      );
+    const formatedOldName = post.name.value.replaceAll(" ", "_");
+    const oldUrl = path.join(
+      __dirname,
+      "..",
+      "..",
+      "..",
+      "..",
+      "public",
+      "uploads",
+      "posts",
+      formatedOldName
+    );
 
+    if (post.name.value !== name) {
       const formatedNewName = name.replaceAll(" ", "_");
       const newUrl = path.join(
         __dirname,
@@ -77,6 +77,8 @@ export class UpdatePostService {
       );
 
       fs.access(oldUrl, (err) => {
+        if (err && err.message.includes("no such file or directory")) return;
+
         if (err && !err.message.includes("no such file or directory")) {
           throw err;
         }
