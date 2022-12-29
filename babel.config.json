@@ -1,0 +1,36 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env", 
+      {
+        "targets": {
+          "node": "current"
+        }
+      }
+    ],
+    "@babel/preset-typescript"
+  ],
+  "plugins": [
+    ["module-resolver", {
+      "root": ["./dist/"],
+      "alias": {
+        "@db": "./src/db/sql",
+        "@cache": "./src/db/cache",
+        "@adapters": "./src/adapters",
+        "@errors": "./src/Errors",
+        "@services": "./src/services",
+        "@viewModel": "./src/viewModel",
+        "@utils": "./src/utils",
+        "@config": "./src/config",
+        "@events": "./src/events",
+        "@entities": "./src/db/entities",
+        "@repositories": "./src/db/repositories",
+        "@tests": "./tests",
+        "@mappers": "./src/db/mappers"
+      }
+    }]
+  ],
+  "ignore": [
+    "**/*.spec.ts"
+  ]
+}

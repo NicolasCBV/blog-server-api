@@ -1,0 +1,63 @@
+
+version: "3"
+
+services:
+  db: 
+    image: mysql:latest
+    hostname: mysql_db
+    restart: always
+    entrypoint: 
+      sh -c "
+        echo 'CREATE DATABASE IF NOT EXISTS blog_db; CREATE DATABASE IF NOT EXISTS shadow_db;' > /docker-entrypoint-initdb.d/init.sql;
+        /entrypoint.sh --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci"
+    environment:
+      MYSQL_ROOT_PASSWORD: "30fd8f76bcb9845101778531778c4ed7c3cece5033edd7dee7dfbd590c616107"
+    ports: 
+      - "3306:3306"
+    expose:
+      - "3306"
+    volumes:
+      - db:/var/lib/mysql
+    networks:
+      - internal_network
+
+  redis_db:
+    image: redis:7.0.5-bullseye
+    restart: always
+    ports:
+      - "6379:6379"
+    command: redis-server --loglevel warning --requirepass 7f55b5e323c416cc757a06ae9c73923ee3615e9a0c05d90ac0d0ecc4b422fca3
+    volumes:
+      - cache:/data
+    networks:
+      - internal_network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    volumes:
+      - .:/usr/app/
+      - '/usr/app/node_modules'
+      - '/usr/app/public'
+    command: "yarn dev"
+    ports:
+      - "3030:3030"
+    networks:
+      - internal_network
+      - external_network
+    depends_on:
+      - db
+      - redis_db
+
+volumes:
+  db:
+    driver: local
+  cache:
+    driver: local
+
+networks:
+  external_network:
+  internal_network:
+    internal: true

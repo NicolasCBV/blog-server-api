@@ -1,0 +1,44 @@
+{
+  "compilerOptions": {
+    "target": "es2021", 
+    "module": "commonJS",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "outDir": "./dist",
+    "incremental": true,
+
+    "removeComments": true,
+
+    "strictNullChecks": true,
+    "strictPropertyInitialization": false,
+
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "noFallthroughCasesInSwitch": false,
+
+    "sourceMap": true,
+    "strict": true,
+    "paths": {
+      "@db/*": ["./src/db/sql/*"],
+      "@cache/*": ["./src/db/cache/*"],
+      "@adapters/*": ["./src/adapters/*"],
+      "@errors/*": ["./src/Errors/*"],
+      "@services/*": ["./src/services/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@config/*": ["./src/config/*"],
+      "@events/*": ["./src/events/*"],
+      "@viewModel/*": ["./src/viewModel/*"],
+      "@entities/*": ["./src/db/entities/*"],
+      "@repositories/*": ["./src/db/repositories/*"],
+      "@tests/*": ["./tests/*"],
+      "@mappers/*": ["./src/db/mappers/*"]
+    }
+  },
+  "include": ["./src/**/*", "./tests/**/*"],
+  "exclude": ["node_modules"]
+}

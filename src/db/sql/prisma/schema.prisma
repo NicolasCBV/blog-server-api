@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "mysql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+model users {
+  active      Boolean @default(false)
+  id          String  @id @default(uuid())
+  idToken     String?
+  photo       String?
+  name        String  @db.VarChar(64)
+  email       String  @db.VarChar(256)
+  description String?  @db.VarChar(256)
+  password    String  @db.VarChar(256)
+  admin       Boolean @default(false)
+
+  accept2FA  Boolean @default(false)
+  OTP        String? @db.VarChar(256)
+  OTPissued  BigInt?
+  OTPexpires BigInt?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  posts     posts[]
+
+  @@unique([name, email])
+}
+
+model posts {
+  id          String  @id @default(uuid())
+  name        String  @db.VarChar(32)
+  imageUrl    String?
+  content     String  @db.LongText
+  description String  @db.VarChar(46)
+  creatorId   String
+
+  creatorInfo users @relation(fields: [creatorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
