@@ -1,0 +1,14 @@
+/coverage
+/dist
+/public
+/node_modules
+.env
+.env.dev
+.env.production
+.env.test
+*.png
+*.jpg
+*.txt
+*.lock
+test.sh
+/yarn-error.log
