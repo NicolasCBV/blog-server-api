@@ -77,6 +77,8 @@ export class UpdatePostService {
       );
 
       fs.access(oldUrl, (err) => {
+        if (err && err.message.includes("no such file or directory")) return;
+
         if (err && !err.message.includes("no such file or directory")) {
           throw err;
         }
